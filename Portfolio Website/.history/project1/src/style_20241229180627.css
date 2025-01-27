@@ -1,0 +1,30 @@
+html{
+  background-color:black;
+}
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+}
+nav{  /*nav area and css*/
+  position: fixed;
+  margin
+  width:100%;
+  z-index: 5;
+  overflow: hidden;
+  background-color: #c3d3e9;
+  font-family:"Montserrat", serif;
+}
+/* Links inside the navbar */
+nav a {
+  float: left;
+  font-size: 16px;
+  color: #000000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+/* Add a blue background color to navbar links on hover */
+nav a:hover{
+  background-color: #597491;
+}

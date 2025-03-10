@@ -94,7 +94,7 @@ function animate() {
   onWindowResize()
   controls.update();
 
-  sphere.rotation.y += 0.03;
+  sphere.rotation.y += 0.01;
 
   renderer.render(scene, camera);
 }

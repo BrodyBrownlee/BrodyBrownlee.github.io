@@ -91,7 +91,7 @@ Array(200).fill().forEach(addStar);
 document.addEventListener('keydown', (event) => {
   if (event.code === 'ArrowRight') {
     currentPlaybackTime = sound.context.currentTime - sound.startTime;
-    playAudio('./audio/sunshine.mp3',currentPlaybackTime);
+    playAudio('./audio/sunshine.mp3');
       spinClockwise = false;
       }
   if (event.code === 'ArrowLeft') {

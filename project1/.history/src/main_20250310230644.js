@@ -39,20 +39,60 @@ camera.add( listener);
 //setting up positional audio
 const sound = new THREE.PositionalAudio( listener );
 //setting up audio loader for music
-const audioLoader = new THREE.AudioLoader();
+const audioLoader = new THREE.AudioLoader(listener.context);
 
-function playAudio(filePath, startTime = 0){
-    sound.stop();
-    audioLoader.load(filePath, function(buffer) {
+//reverses audio
+function reverseBuffer(buffer) {
+  const numberOfChannels = buffer.numberOfChannels;
+  const reversedBuffer = listener.context.createBuffer(
+    numberOfChannels,
+    buffer.length,
+    buffer.sampleRate
+  );
+
+  for (let i = 0; i < numberOfChannels; i++) {
+    const channelData = buffer.getChannelData(i);
+    const reversedChannelData = reversedBuffer.getChannelData(i);
+    for (let j = 0, k = channelData.length - 1; j < channelData.length; j++, k--) {
+      reversedChannelData[j] = channelData[k];
+    }
+  }
+
+  return reversedBuffer;
+}
+
+function playReversedAudio(filePath, startTime = 0) {
+  sound.stop();
+  audioLoader.load(filePath, function(buffer) {
+    const reversedBuffer = reverseBuffer(buffer);
+    sound.setBuffer(reversedBuffer);
+    sound.setLoop(true);
+    sound.setRefDistance(5);
+    sound.setVolume(0.5);
+    sound.playbackRate = 1;
+    sound.startTime = startTime;
+    sound.play();
+    console.log('Playing reversed audio from:', startTime);
+  }, undefined, function(err) {
+    console.error('An error occurred while loading the audio file:', err);
+  });
+}
+
+function playAudio(filePath, startTime = 0) {
+  sound.stop();
+  audioLoader.load(filePath, function(buffer) {
     sound.setBuffer(buffer);
     sound.setLoop(true);
     sound.setRefDistance(5);
     sound.setVolume(0.5);
     sound.playbackRate = 1;
     sound.startTime = startTime;
-    sound.play();   
-  })
-  }
+    sound.play();
+    console.log('Playing audio from:', startTime);
+  }, undefined, function(err) {
+    console.error('An error occurred while loading the audio file:', err);
+  });
+}
 
 
 const moonGeometry = new THREE.SphereGeometry(10,64,64);
@@ -87,27 +127,23 @@ function addStar() {
 //adds stars to scene
 Array(200).fill().forEach(addStar);
 
-// Event listener for space bar press
+// Event listener for key presses
 document.addEventListener('keydown', (event) => {
   if (event.code === 'ArrowRight') {
     currentPlaybackTime = sound.context.currentTime - sound.startTime;
-    playAudio('./audio/sunshine.mp3',currentPlaybackTime);
-      spinClockwise = false;
-      }
+    playAudio('./audio/sunshine.mp3', currentPlaybackTime);
+    spinClockwise = false;
+  }
   if (event.code === 'ArrowLeft') {
     currentPlaybackTime = sound.context.currentTime - sound.startTime;
-    playAudio('./audio/enihsnus.mp3',currentPlaybackTime);
+    playReversedAudio('./audio/sunshine.mp3', currentPlaybackTime);
     spinClockwise = true;
   }
   if (event.code === 'Space') {
-    {
-      if(sound.isPlaying)
-      {
-        sound.pause(); 
-      }
-      else{
-        sound.play();
-      }
+    if (sound.isPlaying) {
+      sound.pause();
+    } else {
+      sound.play();
     }
   }
 });

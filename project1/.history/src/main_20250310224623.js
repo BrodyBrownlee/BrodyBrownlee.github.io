@@ -13,7 +13,6 @@ const renderer = new THREE.WebGLRenderer({
 });
 
 let spinClockwise = false;
-let currentPlaybackTime = 0;
 
 //background texture
 const spaceTexture = new THREE.TextureLoader().load('../images/sun.jpeg');
@@ -41,7 +40,7 @@ const sound = new THREE.PositionalAudio( listener );
 //setting up audio loader for music
 const audioLoader = new THREE.AudioLoader();
 
-function playAudio(filePath, startTime = 0){
+function playAudio(filePath){
     sound.stop();
     audioLoader.load(filePath, function(buffer) {
     sound.setBuffer(buffer);
@@ -49,7 +48,6 @@ function playAudio(filePath, startTime = 0){
     sound.setRefDistance(5);
     sound.setVolume(0.5);
     sound.playbackRate = 1;
-    sound.startTime = startTime;
     sound.play();   
   })
   }
@@ -90,14 +88,11 @@ Array(200).fill().forEach(addStar);
 // Event listener for space bar press
 document.addEventListener('keydown', (event) => {
   if (event.code === 'ArrowRight') {
-    currentPlaybackTime = sound.context.currentTime - sound.startTime;
-    playAudio('./audio/sunshine.mp3',currentPlaybackTime);
-      spinClockwise = false;
+    playAudio('./audio/sunshine.mp3');
       }
   if (event.code === 'ArrowLeft') {
-    currentPlaybackTime = sound.context.currentTime - sound.startTime;
-    playAudio('./audio/enihsnus.mp3',currentPlaybackTime);
-    spinClockwise = true;
+    playAudio('./audio/enihsnus.mp3');
+    spinClockwise = 
   }
   if (event.code === 'Space') {
     {
@@ -127,12 +122,8 @@ function animate() {
   onWindowResize()
   controls.update();
 
-  if(spinClockwise){
-    sphere.rotation.y -= 0.01;
-  }
-  else{
-    sphere.rotation.y += 0.01;
-  }
+  sphere.rotation.y += 0.01;
+
   renderer.render(scene, camera);
 }
 

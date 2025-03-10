@@ -12,8 +12,6 @@ const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg'),
 });
 
-let spinClockwise = false;
-let currentPlaybackTime = 0;
 
 //background texture
 const spaceTexture = new THREE.TextureLoader().load('../images/sun.jpeg');
@@ -38,22 +36,9 @@ const listener = new THREE.AudioListener();
 camera.add( listener);
 //setting up positional audio
 const sound = new THREE.PositionalAudio( listener );
+
 //setting up audio loader for music
 const audioLoader = new THREE.AudioLoader();
-
-function playAudio(filePath, startTime = 0){
-    sound.stop();
-    audioLoader.load(filePath, function(buffer) {
-    sound.setBuffer(buffer);
-    sound.setLoop(true);
-    sound.setRefDistance(5);
-    sound.setVolume(0.5);
-    sound.playbackRate = 1;
-    sound.startTime = startTime;
-    sound.play();   
-  })
-  }
-
 
 const moonGeometry = new THREE.SphereGeometry(10,64,64);
 const moonMaterial = new THREE.MeshBasicMaterial({color:0xffffff});
@@ -89,25 +74,18 @@ Array(200).fill().forEach(addStar);
 
 // Event listener for space bar press
 document.addEventListener('keydown', (event) => {
-  if (event.code === 'ArrowRight') {
-    currentPlaybackTime = sound.context.currentTime - sound.startTime;
-    playAudio('./audio/sunshine.mp3',currentPlaybackTime);
-      spinClockwise = false;
-      }
-  if (event.code === 'ArrowLeft') {
-    currentPlaybackTime = sound.context.currentTime - sound.startTime;
-    playAudio('./audio/enihsnus.mp3',currentPlaybackTime);
-    spinClockwise = true;
-  }
-  if (event.code === 'Space') {
-    {
-      if(sound.isPlaying)
-      {
-        sound.pause(); 
-      }
-      else{
-        sound.play();
-      }
+  if (event.code === 'Left') {
+    if (sound.isPlaying) {
+      sound.pause();
+    } else {
+      audioLoader.load( './audio/sunshine.mp3', function(buffer) {
+        sound.setBuffer(buffer);
+        sound.setLoop(true);
+        sound.setRefDistance(5);
+        sound.setVolume(0.5);
+        sound.playbackRate = 1;
+      sound.play();   
+      })
     }
   }
 });
@@ -127,12 +105,8 @@ function animate() {
   onWindowResize()
   controls.update();
 
-  if(spinClockwise){
-    sphere.rotation.y -= 0.01;
-  }
-  else{
-    sphere.rotation.y += 0.01;
-  }
+  sphere.rotation.y += 0.01;
+
   renderer.render(scene, camera);
 }
 

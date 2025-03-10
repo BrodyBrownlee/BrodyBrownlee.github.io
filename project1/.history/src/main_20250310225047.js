@@ -41,7 +41,7 @@ const sound = new THREE.PositionalAudio( listener );
 //setting up audio loader for music
 const audioLoader = new THREE.AudioLoader();
 
-function playAudio(filePath, startTime = 0){
+function playAudio(filePath){
     sound.stop();
     audioLoader.load(filePath, function(buffer) {
     sound.setBuffer(buffer);
@@ -49,7 +49,6 @@ function playAudio(filePath, startTime = 0){
     sound.setRefDistance(5);
     sound.setVolume(0.5);
     sound.playbackRate = 1;
-    sound.startTime = startTime;
     sound.play();   
   })
   }
@@ -90,13 +89,11 @@ Array(200).fill().forEach(addStar);
 // Event listener for space bar press
 document.addEventListener('keydown', (event) => {
   if (event.code === 'ArrowRight') {
-    currentPlaybackTime = sound.context.currentTime - sound.startTime;
-    playAudio('./audio/sunshine.mp3',currentPlaybackTime);
+    playAudio('./audio/sunshine.mp3');
       spinClockwise = false;
       }
   if (event.code === 'ArrowLeft') {
-    currentPlaybackTime = sound.context.currentTime - sound.startTime;
-    playAudio('./audio/enihsnus.mp3',currentPlaybackTime);
+    playAudio('./audio/enihsnus.mp3');
     spinClockwise = true;
   }
   if (event.code === 'Space') {

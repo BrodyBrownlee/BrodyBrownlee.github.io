@@ -41,6 +41,40 @@ const sound = new THREE.PositionalAudio( listener );
 //setting up audio loader for music
 const audioLoader = new THREE.AudioLoader();
 
+//reverses audio
+function reverseBuffer(buffer) {
+  const numberOfChannels = buffer.numberOfChannels;
+  const reversedBuffer = audioLoader.context.createBuffer(
+    numberOfChannels,
+    buffer.length,
+    buffer.sampleRate
+  );
+
+  for (let i = 0; i < numberOfChannels; i++) {
+    const channelData = buffer.getChannelData(i);
+    const reversedChannelData = reversedBuffer.getChannelData(i);
+    for (let j = 0, k = channelData.length - 1; j < channelData.length; j++, k--) {
+      reversedChannelData[j] = channelData[k];
+    }
+  }
+
+  return reversedBuffer;
+}
+function playReversedAudio(filePath, startTime = 0) {
+  sound.stop();
+  audioLoader.load(filePath, function(buffer) {
+    const reversedBuffer = reverseBuffer(buffer);
+    sound.setBuffer(reversedBuffer);
+    sound.setLoop(true);
+    sound.setRefDistance(5);
+    sound.setVolume(0.5);
+    sound.playbackRate = 1;
+    sound.startTime = startTime;
+    sound.play();
+  }, undefined, function(err) {
+    console.error('An error occurred while loading the audio file:', err);
+  });
+}
 function playAudio(filePath, startTime = 0){
     sound.stop();
     audioLoader.load(filePath, function(buffer) {

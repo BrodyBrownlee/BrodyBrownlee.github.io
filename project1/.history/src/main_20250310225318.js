@@ -42,7 +42,6 @@ const sound = new THREE.PositionalAudio( listener );
 const audioLoader = new THREE.AudioLoader();
 
 function playAudio(filePath, startTime = 0){
-    sound.stop();
     audioLoader.load(filePath, function(buffer) {
     sound.setBuffer(buffer);
     sound.setLoop(true);

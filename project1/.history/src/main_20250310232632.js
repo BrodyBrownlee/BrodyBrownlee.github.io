@@ -16,7 +16,7 @@ let spinClockwise = false;
 let currentPlaybackTime = 0;
 
 //background texture
-const spaceTexture = new THREE.TextureLoader().load('./images/sun.jpeg');
+const spaceTexture = new THREE.TextureLoader().load('../images/sun.jpeg');
 scene.background = spaceTexture;
 
 //setting size of canvas for rendering
@@ -86,7 +86,7 @@ function playAudio(filePath, startTime = 0){
   sound.play();   
 })
 }
-// Event listener for key presses
+// Event listener for key press
 document.addEventListener('keydown', (event) => {
   if (event.code === 'ArrowRight') {
     currentPlaybackTime = sound.context.currentTime - sound.startTime;

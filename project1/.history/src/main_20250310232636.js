@@ -16,7 +16,7 @@ let spinClockwise = false;
 let currentPlaybackTime = 0;
 
 //background texture
-const spaceTexture = new THREE.TextureLoader().load('./images/sun.jpeg');
+const spaceTexture = new THREE.TextureLoader().load('../images/sun.jpeg');
 scene.background = spaceTexture;
 
 //setting size of canvas for rendering

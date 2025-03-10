@@ -16,7 +16,7 @@ let spinClockwise = false;
 let currentPlaybackTime = 0;
 
 //background texture
-const spaceTexture = new THREE.TextureLoader().load('./images/sun.jpeg');
+const spaceTexture = new THREE.TextureLoader().load('../images/sun.jpeg');
 scene.background = spaceTexture;
 
 //setting size of canvas for rendering
@@ -72,8 +72,6 @@ function addStar() {
 }
 //adds stars to scene
 Array(200).fill().forEach(addStar);
-
-
 function playAudio(filePath, startTime = 0){
   sound.stop();
   audioLoader.load(filePath, function(buffer) {
@@ -86,7 +84,7 @@ function playAudio(filePath, startTime = 0){
   sound.play();   
 })
 }
-// Event listener for key presses
+// Event listener for space bar press
 document.addEventListener('keydown', (event) => {
   if (event.code === 'ArrowRight') {
     currentPlaybackTime = sound.context.currentTime - sound.startTime;

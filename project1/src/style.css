@@ -31,3 +31,51 @@ nav a {
 nav a:hover{
   background-color: #252525;
 }
+#centreButton{
+  position: absolute;
+  top: 50vh;
+  left: 45vw;
+  background-color: black;
+  color: white;
+  border: solid 2px white;
+  font-size: 16px;
+  padding: 14px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+#centreButton{
+  position: absolute;
+  top: 50vh;
+  left: 45vw;
+  background-color: black;
+  color: white;
+  border: solid 2px white;
+  font-size: 16px;
+  padding: 14px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+#centreButton{
+  position: absolute;
+  top: 50vh;
+  left: 45vw;
+  background-color: black;
+  color: white;
+  border: solid 2px white;
+  font-size: 16px;
+  padding: 14px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+#centreButton:hover {
+  animation: fadeBlue 0.4s ease-in forwards; /* Add 'forwards' to keep the final state */
+}
+
+@keyframes fadeBlue {
+  0% {
+    background-color: black; /* Change to match the initial background color */
+  }
+  100% {
+    background-color: #74beef;
+  }
+}

@@ -5,6 +5,16 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/Addons.js';
 import { PI } from 'three/src/nodes/TSL.js';
 
+
+document.addEventListener('DOMContentLoaded', (event) => {
+document.getElementById('app').style.display = 'none';});
+
+document.getElementById('centreButton').addEventListener('click', function(){
+document.getElementById('app').style.display = 'block';
+document.getElementById('centreButton').style.display = 'none';
+});
+
+// three.js code
 //setting up scene and camera for rendering
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000);

@@ -1,7 +1,12 @@
 export default {
-    base: '/BrodyBrownlee.github.io/',
     build: {
         outDir: 'dist',
-        assetsDir: 'assets',
+        assetsDir: 'assets'
+    },
+    optimizeDeps: {
+        include: ['three']
+    },
+    server: {
+        port: 3000
     }
 }

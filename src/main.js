@@ -24,7 +24,7 @@ let spinClockwise = false;
 let currentPlaybackTime = 0;
 
 //background texture
-const spaceTexture = new THREE.TextureLoader().load('/images/sun.jpeg');
+const spaceTexture = new THREE.TextureLoader().load('./images/sun.jpeg');
 scene.background = spaceTexture;
 
 //setting size of canvas for rendering
@@ -35,7 +35,7 @@ camera.position.setZ(30);
 renderer.render(scene, camera);
 
 // setting up sphere and mesh
-const sunTexture = new THREE.TextureLoader().load('/images/sun.jpeg');
+const sunTexture = new THREE.TextureLoader().load('./images/sun.jpeg');
 const geometry = new THREE.SphereGeometry(15, 64, 64);
 const material = new THREE.MeshBasicMaterial({ map: sunTexture });
 const sphere = new THREE.Mesh(geometry, material);
@@ -98,12 +98,12 @@ function playAudio(filePath, startTime = 0) {
 document.addEventListener('keydown', (event) => {
   if (event.code === 'ArrowRight') {
     currentPlaybackTime = sound.context.currentTime - sound.startTime;
-    playAudio('/audio/sunshine.mp3', currentPlaybackTime);
+    playAudio('../audio/sunshine.mp3', currentPlaybackTime);
     spinClockwise = false;
   }
   if (event.code === 'ArrowLeft') {
     currentPlaybackTime = sound.context.currentTime - sound.startTime;
-    playAudio('/audio/enihsnus.mp3', currentPlaybackTime);
+    playAudio('../audio/enihsnus.mp3', currentPlaybackTime);
     spinClockwise = true;
   }
   if (event.code === 'Space') {
